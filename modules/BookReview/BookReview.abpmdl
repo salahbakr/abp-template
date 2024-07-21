@@ -1,0 +1,111 @@
+{
+  "folders": {
+    "items": {
+      "src": {},
+      "test": {},
+      "host": {}
+    }
+  },
+  "packages": {
+    "BookReview.Domain.Shared": {
+      "path": "src/BookReview.Domain.Shared/BookReview.Domain.Shared.abppkg",
+      "folder": "src"
+    },
+    "BookReview.Domain": {
+      "path": "src/BookReview.Domain/BookReview.Domain.abppkg",
+      "folder": "src"
+    },
+    "BookReview.Application.Contracts": {
+      "path": "src/BookReview.Application.Contracts/BookReview.Application.Contracts.abppkg",
+      "folder": "src"
+    },
+    "BookReview.Application": {
+      "path": "src/BookReview.Application/BookReview.Application.abppkg",
+      "folder": "src"
+    },
+    "BookReview.EntityFrameworkCore": {
+      "path": "src/BookReview.EntityFrameworkCore/BookReview.EntityFrameworkCore.abppkg",
+      "folder": "src"
+    },
+    "BookReview.MongoDB": {
+      "path": "src/BookReview.MongoDB/BookReview.MongoDB.abppkg",
+      "folder": "src"
+    },
+    "BookReview.HttpApi": {
+      "path": "src/BookReview.HttpApi/BookReview.HttpApi.abppkg",
+      "folder": "src"
+    },
+    "BookReview.HttpApi.Client": {
+      "path": "src/BookReview.HttpApi.Client/BookReview.HttpApi.Client.abppkg",
+      "folder": "src"
+    },
+    "BookReview.TestBase": {
+      "path": "test/BookReview.TestBase/BookReview.TestBase.abppkg",
+      "folder": "test"
+    },
+    "BookReview.EntityFrameworkCore.Tests": {
+      "path": "test/BookReview.EntityFrameworkCore.Tests/BookReview.EntityFrameworkCore.Tests.abppkg",
+      "folder": "test"
+    },
+    "BookReview.MongoDB.Tests": {
+      "path": "test/BookReview.MongoDB.Tests/BookReview.MongoDB.Tests.abppkg",
+      "folder": "test"
+    },
+    "BookReview.Domain.Tests": {
+      "path": "test/BookReview.Domain.Tests/BookReview.Domain.Tests.abppkg",
+      "folder": "test"
+    },
+    "BookReview.Application.Tests": {
+      "path": "test/BookReview.Application.Tests/BookReview.Application.Tests.abppkg",
+      "folder": "test"
+    },
+    "BookReview.HttpApi.Host": {
+      "path": "host/BookReview.HttpApi.Host/BookReview.HttpApi.Host.abppkg",
+      "folder": "host"
+    },
+    "BookReview.Web": {
+      "path": "src/BookReview.Web/BookReview.Web.abppkg",
+      "folder": "src"
+    },
+    "BookReview.HttpApi.Client.ConsoleTestApp": {
+      "path": "test/BookReview.HttpApi.Client.ConsoleTestApp/BookReview.HttpApi.Client.ConsoleTestApp.abppkg",
+      "folder": "test"
+    },
+    "BookReview.Web.Host": {
+      "path": "host/BookReview.Web.Host/BookReview.Web.Host.abppkg",
+      "folder": "host"
+    },
+    "BookReview.AuthServer": {
+      "path": "host/BookReview.AuthServer/BookReview.AuthServer.abppkg",
+      "folder": "host"
+    },
+    "BookReview.Host.Shared": {
+      "path": "host/BookReview.Host.Shared/BookReview.Host.Shared.abppkg",
+      "folder": "host"
+    },
+    "BookReview.Web.Unified": {
+      "path": "host/BookReview.Web.Unified/BookReview.Web.Unified.abppkg",
+      "folder": "host"
+    },
+    "BookReview.Blazor": {
+      "path": "src/BookReview.Blazor/BookReview.Blazor.abppkg",
+      "folder": "src"
+    },
+    "BookReview.Blazor.Host": {
+      "path": "host/BookReview.Blazor.Host/BookReview.Blazor.Host.abppkg",
+      "folder": "host"
+    },
+    "BookReview.Blazor.Server": {
+      "path": "src/BookReview.Blazor.Server/BookReview.Blazor.Server.abppkg",
+      "folder": "src"
+    },
+    "BookReview.Blazor.WebAssembly": {
+      "path": "src/BookReview.Blazor.WebAssembly/BookReview.Blazor.WebAssembly.abppkg",
+      "folder": "src"
+    },
+    "BookReview.Blazor.Server.Host": {
+      "path": "host/BookReview.Blazor.Server.Host/BookReview.Blazor.Server.Host.abppkg",
+      "folder": "host"
+    }
+  }
+}
