@@ -1,7 +1,0 @@
-{
-  "modules": {
-    "BookReview": {
-      "path": "BookReview.abpmdl"
-    }
-  }
-}
