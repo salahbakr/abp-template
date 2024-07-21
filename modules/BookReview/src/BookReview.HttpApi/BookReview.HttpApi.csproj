@@ -11,6 +11,7 @@
   <ItemGroup>
     <PackageReference Include="Volo.Abp.AspNetCore.Mvc" Version="8.2.0" />
     <ProjectReference Include="..\BookReview.Application.Contracts\BookReview.Application.Contracts.csproj" />
+    <ProjectReference Include="..\BookReview.Application\BookReview.Application.csproj" />
   </ItemGroup>
 
 </Project>

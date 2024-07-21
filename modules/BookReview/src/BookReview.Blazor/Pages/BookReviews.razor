@@ -2,7 +2,7 @@
 @using BookReview.BookReviews
 @using Acme.BookStore.Books
 @using Volo.Abp.AspNetCore.Components.Web
-@inject IBookReviewAppService BookReviewAppService
+@inject IBookReviewApplicationService BookReviewAppService
 @inject IBookAppService BookAppService
 
 <Card>
@@ -24,7 +24,28 @@
                   TotalItems="TotalCount"
                   ShowPager="true"
                   PageSize="PageSize">
-            <DataGridColumns>
+        <DataGridColumns>
+                <DataGridColumn Width="150px"
+                                TItem="BookReviewDto"
+                                Field="@nameof(BookReviewDto.Id)"
+                                Sortable="false"
+                                Caption="Actions">
+                    <DisplayTemplate>
+                        <Dropdown>
+                            <DropdownToggle Color="Color.Primary">
+                                Actions
+                            </DropdownToggle>
+                            <DropdownMenu>
+                                <DropdownItem Clicked="() => OpenEditBookReviewModal(context)">
+                                    Edit
+                                </DropdownItem>
+                                <DropdownItem Clicked="() => DeleteBookReviewAsync(context)">
+                                    Delete
+                                </DropdownItem>
+                            </DropdownMenu>
+                        </Dropdown>
+                    </DisplayTemplate>
+                </DataGridColumn>
                 <DataGridColumn TItem="BookReviewDto"
                                 Field="@nameof(BookReviewDto.ReviewerName)"
                                 Caption="Reviewer Name"></DataGridColumn>
@@ -51,7 +72,7 @@
                 <CloseButton Clicked="CloseCreateBookReviewModal" />
             </ModalHeader>
             <ModalBody>
-                <Validations @ref="@CreateValidationsRef" Model="@NewBookReview" ValidateOnLoad="false">
+                <Validations @ref="CreateValidationsRef" Model="@NewBookReview" ValidateOnLoad="false">
                     <Field>
                         <FieldLabel>Text</FieldLabel>
                         <MemoEdit Rows="5" @bind-Text="@NewBookReview.Text">
@@ -67,7 +88,7 @@
                     <Field>
                         <FieldLabel>Book</FieldLabel>
                         <Select TValue="Guid" @bind-SelectedValue="@NewBookReview.BookId">
-                            @foreach (var book in Books)
+                            @foreach (var book in bookList)
                             {
                                 <SelectItem TValue="Guid" Value="@book.Id">
                                     @book.Name
@@ -92,3 +113,74 @@
         </Form>
     </ModalContent>
 </Modal>
+
+<Modal @ref="EditBookReviewModal">
+    <ModalBackdrop />
+    <ModalContent IsCentered="true">
+        <Form>
+            <ModalHeader>
+                <ModalTitle>@EditingBookReview.Text</ModalTitle>
+                <CloseButton Clicked="CloseEditBookReviewModal" />
+            </ModalHeader>
+            <ModalBody>
+                <Validations @ref="EditValidationsRef" Model="@EditingBookReview" ValidateOnLoad="false">
+                    <Field>
+                        <FieldLabel>Text</FieldLabel>
+                        <MemoEdit Rows="5" @bind-Text="@EditingBookReview.Text">
+                            <Feedback>
+                                <ValidationError/>
+                            </Feedback>
+                        </MemoEdit>
+                    </Field>
+                    <Field>
+                        <FieldLabel>Rating</FieldLabel>
+                        <NumericEdit TValue="int" @bind-Value="EditingBookReview.Rating" />
+                    </Field>
+                    <Field>
+                        <FieldLabel>Book</FieldLabel>
+                        <Select TValue="Guid" @bind-SelectedValue="@EditingBookReview.BookId">
+                            @foreach (var book in bookList)
+                            {
+                                <SelectItem TValue="Guid" Value="@book.Id">
+                                    @book.Name
+                                </SelectItem>
+                            }
+                        </Select>
+                    </Field>
+                </Validations>
+            </ModalBody>
+            <ModalFooter>
+                <Button Color="Color.Secondary"
+                        Clicked="CloseEditBookReviewModal">
+                    Cancel
+                </Button>
+                <Button Color="Color.Primary"
+                        Type="@ButtonType.Submit"
+                        PreventDefaultOnSubmit="true"
+                        Clicked="UpdateBookReviewAsync">
+                    Save
+                </Button>
+            </ModalFooter>
+        </Form>
+    </ModalContent>
+</Modal>
+
+@code
+{
+    //ADDED A NEW FIELD
+    IReadOnlyList<BookDto> bookList = Array.Empty<BookDto>();
+
+    //GET AUTHORS ON INITIALIZATION
+    protected override async Task OnInitializedAsync()
+    {
+        await base.OnInitializedAsync();
+        CreateBookReviewModal = new Modal();
+        CreateValidationsRef = new Validations();
+        EditBookReviewModal = new Modal();
+        EditValidationsRef = new Validations();
+
+        await GetBookReviewsAsync();
+        await GetBooksAsync();
+        bookList = (await BookAppService.GetListAsync(new Volo.Abp.Application.Dtos.PagedAndSortedResultRequestDto{SkipCount = 0})).Items;
+    }
+}

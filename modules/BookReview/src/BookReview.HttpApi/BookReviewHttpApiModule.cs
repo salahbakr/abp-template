@@ -28,5 +28,9 @@ public class BookReviewHttpApiModule : AbpModule
                 .Get<BookReviewResource>()
                 .AddBaseTypes(typeof(AbpUiResource));
         });
+        Configure<AbpAspNetCoreMvcOptions>(options =>
+        {
+            options.ConventionalControllers.Create(typeof(BookReviewApplicationModule).Assembly);
+        });
     }
 }

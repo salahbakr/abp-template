@@ -2,6 +2,7 @@
 using Volo.Abp.AutoMapper;
 using Volo.Abp.Modularity;
 using Volo.Abp.Application;
+using BookReview.EntityFrameworkCore;
 
 namespace BookReview;
 
@@ -19,6 +20,12 @@ public class BookReviewApplicationModule : AbpModule
         Configure<AbpAutoMapperOptions>(options =>
         {
             options.AddMaps<BookReviewApplicationModule>(validate: true);
+        });
+
+        context.Services.AddAbpDbContext<BookReviewDbContext>(options =>
+        {
+            // Add default repositories only for aggregate roots
+            options.AddDefaultRepositories(includeAllEntities: true);
         });
     }
 }

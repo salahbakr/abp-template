@@ -10,13 +10,13 @@ using Volo.Abp.Users;
 
 namespace BookReview.BookReviews;
 
-public class BookReviewAppService : ApplicationService, IBookReviewAppService
+public class BookReviewApplicationService : ApplicationService, IBookReviewApplicationService
 {
     private readonly IRepository<BookReview, Guid> _bookReviewRepository;
     private readonly IRepository<Book, Guid> _bookRepository;
     private readonly ICurrentUser _currentUser;
 
-    public BookReviewAppService(
+    public BookReviewApplicationService(
         IRepository<BookReview, Guid> bookReviewRepository,
         IRepository<Book, Guid> bookRepository,
         ICurrentUser currentUser)
@@ -28,7 +28,7 @@ public class BookReviewAppService : ApplicationService, IBookReviewAppService
 
     public async Task<BookReviewDto> CreateAsync(CreateBookReviewDto input)
     {
-        var book = await _bookRepository.GetAsync(input.BookId); // Ensure the book exists
+        var book = await _bookRepository.GetAsync(input.BookId);
 
         if (book == null)
         {
@@ -41,6 +41,15 @@ public class BookReviewAppService : ApplicationService, IBookReviewAppService
 
         await _bookReviewRepository.InsertAsync(review);
         return ObjectMapper.Map<BookReview, BookReviewDto>(review);
+    }
+
+    public async Task<BookReviewDto> DeleteAsync(Guid id)
+    {
+        var bookReview = await _bookReviewRepository.GetAsync(id);
+
+        _bookReviewRepository.DeleteAsync(bookReview);
+
+        return ObjectMapper.Map<BookReview, BookReviewDto>(bookReview);
     }
 
     public async Task<List<BookReviewDto>> GetListAsync()
@@ -59,5 +68,16 @@ public class BookReviewAppService : ApplicationService, IBookReviewAppService
             UserId = review.UserId,
             BookName = books.FirstOrDefault(b => b.Id == review.BookId)?.Name
         }).ToList();
+    }
+
+    public async Task<BookReviewDto> UpdateAsync(Guid id, CreateBookReviewDto input)
+    {
+        var bookReview = await _bookReviewRepository.GetAsync(id);
+
+        ObjectMapper.Map(input, bookReview);
+
+        await _bookReviewRepository.UpdateAsync(bookReview);
+
+        return ObjectMapper.Map<BookReview, BookReviewDto>(bookReview);
     }
 }

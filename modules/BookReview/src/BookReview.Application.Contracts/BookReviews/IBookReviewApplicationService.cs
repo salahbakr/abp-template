@@ -8,8 +8,10 @@ using Volo.Abp.Application.Services;
 
 namespace BookReview;
 
-public interface IBookReviewAppService : IApplicationService
+public interface IBookReviewApplicationService : IApplicationService
 {
     Task<List<BookReviewDto>> GetListAsync();
     Task<BookReviewDto> CreateAsync(CreateBookReviewDto input);
+    Task<BookReviewDto> UpdateAsync(Guid id, CreateBookReviewDto input);
+    Task<BookReviewDto> DeleteAsync(Guid id);
 }

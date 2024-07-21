@@ -1,10 +1,9 @@
 ﻿using Acme.BookStore.Books;
 using Blazorise;
 using BookReview.BookReviews;
+using Microsoft.AspNetCore.Components;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using Volo.Abp.Application.Dtos;
 
@@ -21,20 +20,18 @@ public partial class BookReviews
     private int TotalCount { get; set; }
 
     private CreateBookReviewDto NewBookReview { get; set; }
+    private CreateBookReviewDto EditingBookReview { get; set; } = new CreateBookReviewDto();
+    private Guid EditingBookReviewId { get; set; }
 
     private Modal CreateBookReviewModal { get; set; }
+    private Modal EditBookReviewModal { get; set; }
 
     private Validations CreateValidationsRef;
+    private Validations EditValidationsRef;
 
     public BookReviews()
     {
         NewBookReview = new CreateBookReviewDto();
-    }
-
-    protected override async Task OnInitializedAsync()
-    {
-        await GetBookReviewsAsync();
-        await GetBooksAsync();
     }
 
     private async Task GetBookReviewsAsync()
@@ -74,5 +71,34 @@ public partial class BookReviews
             await GetBookReviewsAsync();
             CloseCreateBookReviewModal();
         }
+    }
+    private void OpenEditBookReviewModal(BookReviewDto bookReview)
+    {
+        EditingBookReviewId = bookReview.Id;
+        EditingBookReview.Rating = bookReview.Rating;
+        EditingBookReview.Text = bookReview.Text;
+        EditValidationsRef.ClearAll();
+        EditBookReviewModal.Show();
+    }
+
+    private void CloseEditBookReviewModal()
+    {
+        EditBookReviewModal.Hide();
+    }
+
+    private async Task UpdateBookReviewAsync()
+    {
+        if (await EditValidationsRef.ValidateAll())
+        {
+            await BookReviewAppService.UpdateAsync(EditingBookReviewId, EditingBookReview);
+            await GetBookReviewsAsync();
+            CloseEditBookReviewModal();
+        }
+    }
+
+    private async Task DeleteBookReviewAsync(BookReviewDto bookReview)
+    {
+        await BookReviewAppService.DeleteAsync(bookReview.Id);
+        await GetBookReviewsAsync();
     }
 }
